@@ -13,6 +13,12 @@ public class Cat {
         this.id = id;
     }
 
+    public Cat(int price, String breed, String seller) {
+        this.price = price;
+        this.breed = breed;
+        this.seller = seller;
+    }
+
     public Cat(int id, int price, String breed, String seller) {
         this.id = id;
         this.price = price;

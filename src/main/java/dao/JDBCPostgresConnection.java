@@ -13,8 +13,9 @@ public class JDBCPostgresConnection {
 
 
         Connection connection = null;
-        FileInputStream fis;
+        //FileInputStream fis;
         Properties prop = new Properties();
+        /*
         try {
             fis = new FileInputStream("src/main/resources/database.properties");
             prop.load(fis);
@@ -27,8 +28,12 @@ public class JDBCPostgresConnection {
         String host = prop.getProperty("serverName");
         String port = prop.getProperty("port");
         String database = prop.getProperty("database");
-
-
+        */
+        String user="postgres";
+        String password="2033724";
+        String host = "localhost";
+        String port = "5432";
+        String database ="catCRUD";
         try {
 
             Class.forName("org.postgresql.Driver");
