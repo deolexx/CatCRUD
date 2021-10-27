@@ -2,9 +2,9 @@ package entity;
 
 public class Cat {
     protected  int id;
-    protected String name;
-    protected String age;
-    protected String owner;
+    protected int price;
+    protected String breed;
+    protected String seller;
 
     public Cat() {
     }
@@ -13,11 +13,11 @@ public class Cat {
         this.id = id;
     }
 
-    public Cat(int id, String name, String age, String owner) {
+    public Cat(int id, int price, String breed, String seller) {
         this.id = id;
-        this.name = name;
-        this.age = age;
-        this.owner = owner;
+        this.price = price;
+        this.breed = breed;
+        this.seller = seller;
     }
 
     public int getId() {
@@ -28,27 +28,27 @@ public class Cat {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public int getPrice() {
+        return price;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setPrice(int price) {
+        this.price = price;
     }
 
-    public String getAge() {
-        return age;
+    public String getBreed() {
+        return breed;
     }
 
-    public void setAge(String age) {
-        this.age = age;
+    public void setBreed(String breed) {
+        this.breed = breed;
     }
 
-    public String getOwner() {
-        return owner;
+    public String getSeller() {
+        return seller;
     }
 
-    public void setOwner(String owner) {
-        this.owner = owner;
+    public void setSeller(String seller) {
+        this.seller = seller;
     }
 }

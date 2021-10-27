@@ -9,7 +9,7 @@ import java.util.Properties;
 
 public class JDBCPostgresConnection {
 
-    public static void main(String[] args) {
+    public  static Connection getConnection() {
 
 
         Connection connection = null;
@@ -50,7 +50,7 @@ public class JDBCPostgresConnection {
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-
+        return connection;
     }
 
 
