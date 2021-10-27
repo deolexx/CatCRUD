@@ -56,7 +56,7 @@
                             </tr>
             </thead>
             <tbody>
-            <!--   for (Todo todo: todos) {  -->
+
             <c:forEach var="cat" items="${listCat}">
 
                 <tr>

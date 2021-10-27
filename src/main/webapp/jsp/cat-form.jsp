@@ -6,8 +6,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+         pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <head>
     <title>Cat Management Application</title>
@@ -54,7 +54,7 @@
                     </caption>
 
                     <c:if test="${cat != null}">
-                        <input type="hidden" name="id" value="<c:out value='${cat.id}' />" />
+                        <input type="hidden" name="id" value="<c:out value='${cat.id}' />"/>
                     </c:if>
 
                     <fieldset class="form-group">
@@ -65,14 +65,14 @@
 
                     <fieldset class="form-group">
                         <label>Cat Breed</label> <input type="text"
-                                                         value="<c:out value='${cat.breed}' />" class="form-control"
-                                                         name="breed">
+                                                        value="<c:out value='${cat.breed}' />" class="form-control"
+                                                        name="breed">
                     </fieldset>
 
                     <fieldset class="form-group">
                         <label>User Seller</label> <input type="text"
-                                                           value="<c:out value='${cat.seller}' />" class="form-control"
-                                                           name="seller">
+                                                          value="<c:out value='${cat.seller}' />" class="form-control"
+                                                          name="seller">
                     </fieldset>
 
                     <button type="submit" class="btn btn-success">Save</button>

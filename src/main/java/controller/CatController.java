@@ -65,7 +65,7 @@ public class CatController extends HttpServlet {
     private void editCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         String id = req.getParameter("id");
         Optional<Cat> existingCat = catDaoImpl.find(id);
-        // TODO: 27.10.2021 check address
+
         RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/cat-form.jsp");
         existingCat.ifPresent(c -> req.setAttribute("cat", c));
         dispatcher.forward(req, resp);
@@ -74,7 +74,7 @@ public class CatController extends HttpServlet {
     private void listCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         List<Cat> listCat = catDaoImpl.findAll();
         req.setAttribute("listCat", listCat);
-        // TODO: 27.10.2021 check this adress
+
         RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/cat-list.jsp");
         dispatcher.forward(req, resp);
     }
@@ -92,8 +92,6 @@ public class CatController extends HttpServlet {
 
     private void showNewForm(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
 
-
-        // TODO: 27.10.2021 check jsp file location
         RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/cat-form.jsp");
         dispatcher.forward(req, resp);
     }

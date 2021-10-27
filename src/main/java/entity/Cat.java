@@ -1,5 +1,6 @@
 package entity;
 
+
 public class Cat {
     protected  int id;
     protected int price;
