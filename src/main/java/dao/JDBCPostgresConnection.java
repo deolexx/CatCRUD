@@ -1,7 +1,6 @@
 package dao;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +8,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class JDBCPostgresConnection {
-    //  Database credentials
+
     public static void main(String[] args) {
 
 
@@ -33,8 +32,6 @@ public class JDBCPostgresConnection {
         try {
 
             Class.forName("org.postgresql.Driver");
-            System.out.println(password);
-            System.out.println(user);
             connection = DriverManager.getConnection(
                     "jdbc:postgresql://"
                             + host
