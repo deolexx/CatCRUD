@@ -54,22 +54,48 @@ public class DaoCat implements CatDao {
             int price = resultSet.getInt("age");
             String breed = resultSet.getString("breed");
             String seller = resultSet.getString("seller");
+            Cat cat = new Cat(id_cat, price, breed, seller);
+            cats.add(cat);
         }
-        return null;
+        return cats;
     }
 
     @Override
-    public boolean save(Cat o) throws SQLException {
-        return false;
+    public boolean save(Cat cat) throws SQLException {
+        String sql = "INSERT INTO cat (price,breed,owner) VALUES (?, ?, ?)";
+        boolean rowInserted = false;
+        Connection connection = JDBCPostgresConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, cat.getPrice());
+        statement.setString(2, cat.getBreed());
+        statement.setString(3, cat.getSeller());
+        rowInserted = statement.executeUpdate() > 0;
+        return rowInserted;
     }
 
     @Override
-    public boolean update(Cat o) throws SQLException {
-        return false;
+    public boolean update(Cat cat) throws SQLException {
+        String sql = "UPDATE cat SET price = ?, breed = ?, owner = ?";
+        sql += " WHERE cat_id = ?";
+        boolean rowUpdated;
+        Connection connection = JDBCPostgresConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1, cat.getPrice());
+        statement.setString(2, cat.getBreed());
+        statement.setString(3, cat.getSeller());
+        statement.setInt(4, cat.getId());
+        rowUpdated = statement.executeUpdate() > 0;
+        return rowUpdated;
     }
 
     @Override
-    public boolean delete(Cat o) throws SQLException {
-        return false;
+    public boolean delete(Cat cat) throws SQLException {
+        String sql = "DELETE FROM cat WHERE cat_id = ?";
+        boolean rowUpdated;
+        Connection connection = JDBCPostgresConnection.getConnection();
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setInt(1,cat.getId());
+        rowUpdated = statement.executeUpdate() > 0;
+        return rowUpdated;
     }
 }
