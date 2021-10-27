@@ -70,9 +70,13 @@
                     </fieldset>
 
                     <fieldset class="form-group">
-                        <label>User Seller</label> <input type="text"
-                                                          value="<c:out value='${cat.seller}' />" class="form-control"
-                                                          name="seller">
+                        <label>Cat Seller</label> <input type="text"
+                                                          value="<c:out value='${cat.seller_name}' />" class="form-control"
+                                                          name="seller name">
+                    </fieldset> <fieldset class="form-group">
+                        <label>Seller Phone</label> <input type="text"
+                                                          value="<c:out value='${cat.seller_phone}' />" class="form-control"
+                                                          name="seller phone">
                     </fieldset>
 
                     <button type="submit" class="btn btn-success">Save</button>

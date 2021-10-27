@@ -53,7 +53,8 @@
                 <th>ID</th>
                 <th>price</th>
                 <th>breed</th>
-                <th>seller</th>
+                <th>seller_name</th>
+                <th>seller_phone</th>
             </tr>
             </thead>
             <tbody>
@@ -64,7 +65,8 @@
                     <td><c:out value="${cat.id}"/></td>
                     <td><c:out value="${cat.price}"/></td>
                     <td><c:out value="${cat.breed}"/></td>
-                    <td><c:out value="${cat.seller}"/></td>
+                    <td><c:out value="${cat.seller_name}"/></td>
+                    <td><c:out value="${cat.seller_phone}"/></td>
                     <td><a href="edit?id=<c:out value='${cat.id}' />">Edit</a>
                         &nbsp;&nbsp;&nbsp;&nbsp; <a
                                 href="delete?id=<c:out value='${cat.id}' />">Delete</a></td>
