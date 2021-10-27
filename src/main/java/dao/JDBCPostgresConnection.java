@@ -1,5 +1,8 @@
 package dao;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -11,8 +14,15 @@ public class JDBCPostgresConnection {
 
 
         Connection connection = null;
-
+        FileInputStream fis;
         Properties prop = new Properties();
+        try {
+            fis = new FileInputStream("src/main/resources/database.properties");
+            prop.load(fis);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         String user = prop.getProperty("user");
         String password = prop.getProperty("password");
         String host = prop.getProperty("serverName");
@@ -23,17 +33,18 @@ public class JDBCPostgresConnection {
         try {
 
             Class.forName("org.postgresql.Driver");
-            connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/catCRUD", "" + user + "", "" + password + "");
-          /*  connection1 = DriverManager.getConnection(
-                    "jdbc:postgresql://localhost:"
-                            + prop.getProperty("serverName")
+            System.out.println(password);
+            System.out.println(user);
+            connection = DriverManager.getConnection(
+                    "jdbc:postgresql://"
+                            + host
                             + ":"
-                            + prop.getProperty("port") + "/"
-                            + prop.getProperty("database")
-                    , prop.getProperty("user")
-                    , prop.getProperty("password"));
+                            + port + "/"
+                            + database
+                    , user
+                    , password);
 
-            */
+
             if (connection != null) {
                 System.out.println("Connection OK");
             } else {
