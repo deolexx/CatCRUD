@@ -13,6 +13,7 @@ public class Cat {
         this.id = id;
     }
 
+
     public Cat(int price, String breed, String seller) {
         this.price = price;
         this.breed = breed;
