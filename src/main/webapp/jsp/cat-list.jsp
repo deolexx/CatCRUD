@@ -6,8 +6,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+         pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<!DOCTYPE html>
 <html>
 <head>
     <title>Cat Management Application</title>
@@ -20,7 +21,7 @@
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
-         style="background-color: tomato">
+         style="background-color: #ADC2A9">
         <div>
             <a href="https://github.com/deolexx/CatCRUD" class="navbar-brand"> Cat
                 Management App </a>
@@ -53,17 +54,17 @@
                 <th>price</th>
                 <th>breed</th>
                 <th>seller</th>
-                            </tr>
+            </tr>
             </thead>
             <tbody>
 
             <c:forEach var="cat" items="${listCat}">
 
                 <tr>
-                    <td><c:out value="${cat.id}" /></td>
-                    <td><c:out value="${cat.price}" /></td>
-                    <td><c:out value="${cat.breed}" /></td>
-                    <td><c:out value="${cat.seller}" /></td>
+                    <td><c:out value="${cat.id}"/></td>
+                    <td><c:out value="${cat.price}"/></td>
+                    <td><c:out value="${cat.breed}"/></td>
+                    <td><c:out value="${cat.seller}"/></td>
                     <td><a href="edit?id=<c:out value='${cat.id}' />">Edit</a>
                         &nbsp;&nbsp;&nbsp;&nbsp; <a
                                 href="delete?id=<c:out value='${cat.id}' />">Delete</a></td>

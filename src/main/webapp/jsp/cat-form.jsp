@@ -20,14 +20,14 @@
 
 <header>
     <nav class="navbar navbar-expand-md navbar-dark"
-         style="background-color: tomato">
+         style="background-color: #ADC2A9">
         <div>
             <a href="https://github.com/deolexx/CatCRUD" class="navbar-brand"> Cat Management App </a>
         </div>
 
         <ul class="navbar-nav">
             <li><a href="<%=request.getContextPath()%>/list"
-                   class="nav-link">Cats</a></li>
+                   class="nav-link">Back to List</a></li>
         </ul>
     </nav>
 </header>
