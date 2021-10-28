@@ -16,6 +16,9 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Main servlet class
+ */
 @WebServlet("/")
 public class CatController extends HttpServlet {
     private static final long serialVersionUID = 1L;

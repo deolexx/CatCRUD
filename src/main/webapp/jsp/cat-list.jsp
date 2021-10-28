@@ -19,7 +19,7 @@
 </head>
 <body>
 
-<header>
+<header class="back_ground">
     <nav class="navbar navbar-expand-md navbar-dark"
          style="background-color: #ADC2A9">
         <div>
@@ -36,19 +36,19 @@
 <br>
 
 <div class="row">
-    <!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
+
 
     <div class="container">
         <h3 class="text-center">List of Cats</h3>
         <hr>
-        <div class="container text-left">
+        <div class="container text-right">
 
             <a href="<%=request.getContextPath()%>/new" class="btn btn-success">Add
                 New Cat</a>
         </div>
         <br>
         <table class="table table-bordered">
-            <thead>
+            <thead class="back_ground">
             <tr>
                 <th>ID</th>
                 <th>price</th>
