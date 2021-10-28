@@ -107,6 +107,7 @@ public class CatDaoImpl implements CatDao {
         statement2.setInt(3, seller_id);
 
         rowInserted = statement2.executeUpdate() > 0;
+
         return rowInserted;
     }
 
