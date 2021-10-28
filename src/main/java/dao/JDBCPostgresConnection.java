@@ -18,36 +18,18 @@ public class JDBCPostgresConnection {
     private static String database;
 
     /**
-     * Setups DB connection configured in database.properties for further use
+     * Setups DB connection configured in getProperties();
+     *
      * @return - returns connection with database
      */
     public static Connection getConnection() {
 
         Connection connection = null;
 
-        try (InputStream input = JDBCPostgresConnection.class.getClassLoader().getResourceAsStream("database.properties")) {
-
-            Properties prop = new Properties();
-
-            if (input == null) {
-                System.out.println("Sorry, unable to find config.properties");
-
-            }
-
-            //load a properties file from class path, inside static method
-            prop.load(input);
-            host = prop.getProperty("serverName");
-            port = prop.getProperty("port");
-            database = prop.getProperty("database");
-            user = prop.getProperty("user");
-            password = prop.getProperty("password");
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        getProperties();
 
 
         try {
-
             Class.forName("org.postgresql.Driver");
             connection = DriverManager.getConnection(
                     "jdbc:postgresql://"
@@ -57,17 +39,32 @@ public class JDBCPostgresConnection {
                             + database
                     , user
                     , password);
-
-
-            if (connection != null) {
-                System.out.println("Connection OK");
-            } else {
-                System.out.println("Connection FAIL");
-            }
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
         return connection;
+    }
+
+    private static void getProperties() {
+        try (InputStream input = JDBCPostgresConnection.class.
+                getClassLoader().
+                getResourceAsStream("database.properties")) {
+
+            Properties prop = new Properties();
+
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");}
+            //load a properties file from class path, inside static method
+            prop.load(input);
+            //bind props with reserved strings
+            host = prop.getProperty("serverName");
+            port = prop.getProperty("port");
+            database = prop.getProperty("database");
+            user = prop.getProperty("user");
+            password = prop.getProperty("password");
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
 
