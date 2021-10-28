@@ -1,39 +1,51 @@
 package dao;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
+/**
+ *
+ */
 public class JDBCPostgresConnection {
+    private static String user;
+    private static String password;
+    private static String host;
+    private static String port;
+    private static String database;
 
-    public  static Connection getConnection() {
-
+    /**
+     * Setups DB connection configured in database.properties for further use
+     * @return - returns connection with database
+     */
+    public static Connection getConnection() {
 
         Connection connection = null;
-        //FileInputStream fis;
-        Properties prop = new Properties();
-        /*
-        try {
-            fis = new FileInputStream("src/main/resources/database.properties");
-            prop.load(fis);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        try (InputStream input = JDBCPostgresConnection.class.getClassLoader().getResourceAsStream("database.properties")) {
+
+            Properties prop = new Properties();
+
+            if (input == null) {
+                System.out.println("Sorry, unable to find config.properties");
+
+            }
+
+            //load a properties file from class path, inside static method
+            prop.load(input);
+            host = prop.getProperty("serverName");
+            port = prop.getProperty("port");
+            database = prop.getProperty("database");
+            user = prop.getProperty("user");
+            password = prop.getProperty("password");
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
-        String user = prop.getProperty("user");
-        String password = prop.getProperty("password");
-        String host = prop.getProperty("serverName");
-        String port = prop.getProperty("port");
-        String database = prop.getProperty("database");
-        */
-        String user="postgres";
-        String password="2033724";
-        String host = "localhost";
-        String port = "5432";
-        String database ="catCRUD";
+
         try {
 
             Class.forName("org.postgresql.Driver");

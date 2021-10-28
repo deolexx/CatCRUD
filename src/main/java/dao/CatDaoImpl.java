@@ -6,9 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class CatDaoImpl implements CatDao {
 
@@ -46,7 +44,7 @@ public class CatDaoImpl implements CatDao {
 
     @Override
     public List<Cat> findAll() throws SQLException {
-        ArrayList<Cat> cats = new ArrayList<>();
+        List<Cat> cats = new ArrayList<>();
         String sql = "SELECT * FROM cat JOIN seller ON seller.id=cat.seller_id";
         Connection connection = JDBCPostgresConnection.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
@@ -60,7 +58,8 @@ public class CatDaoImpl implements CatDao {
             Cat cat = new Cat(id, price, breed, seller_name, seller_phone);
             cats.add(cat);
         }
-        return cats;
+        Collections.sort(cats);
+        return  cats;
     }
 
     @Override
