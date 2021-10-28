@@ -66,33 +66,31 @@ public class CatDaoImpl implements CatDao {
     @Override
     public boolean save(Cat cat) throws SQLException {
         String sql1 = "INSERT INTO seller (name, phone) VALUES ( ?, ?) RETURNING id";
-        String sql2 = "SELECT currval('seller_id_seq')";
-        String sql3 = "INSERT INTO cat (price,breed,seller_id) VALUES ( ?, ?, ?)";
+        String sql2 = "INSERT INTO cat (price,breed,seller_id) VALUES ( ?, ?, ?)";
         boolean rowInserted = false;
         Connection connection = JDBCPostgresConnection.getConnection();
         PreparedStatement statement1 = connection.prepareStatement(sql1);
         //insert into seller
+        System.out.println(cat.getSeller_name());
+        System.out.println(cat.getSeller_phone());
         statement1.setString(1, cat.getSeller_name());
         statement1.setString(2, cat.getSeller_phone());
+        ResultSet resultSet = statement1.executeQuery();
+        int seller_id = 0;
+        if (resultSet.next()) {
+            seller_id=resultSet.getInt("id");
+        }
+        System.out.println(seller_id);
+        connection.close();
 
-        //get seller_id from seller
-        // TODO: 28.10.2021 get erors here 
-        PreparedStatement statement2 = connection1.prepareStatement(sql2);
-        ResultSet resultSet = statement2.executeQuery();
-        int id = resultSet.getInt("cat_id");
+        Connection connection2 = JDBCPostgresConnection.getConnection();
 
-                //int id = resultSet.getInt("cat_id");
-        System.out.println("id=:" + id);
-
-        System.out.println("2");
-
-        //insert into cat
-        Connection connection3 = JDBCPostgresConnection.getConnection();
-        PreparedStatement statement3 = connection3.prepareStatement(sql3);
-        statement3.setInt(1, cat.getPrice());
-        statement3.setString(2, cat.getBreed());
-        statement3.setInt(3, id);
-        rowInserted = statement3.executeUpdate() > 0;
+        PreparedStatement statement2 = connection2.prepareStatement(sql2);
+        statement2.setInt(1, cat.getPrice());
+        statement2.setString(2, cat.getBreed());
+        statement2.setInt(3, seller_id);
+        
+        rowInserted = statement2.executeUpdate() > 0;
         return rowInserted;
     }
 

@@ -72,11 +72,11 @@
                     <fieldset class="form-group">
                         <label>Cat Seller</label> <input type="text"
                                                           value="<c:out value='${cat.seller_name}' />" class="form-control"
-                                                          name="seller name">
+                                                          name="seller_name">
                     </fieldset> <fieldset class="form-group">
                         <label>Seller Phone</label> <input type="text"
                                                           value="<c:out value='${cat.seller_phone}' />" class="form-control"
-                                                          name="seller phone">
+                                                          name="seller_phone">
                     </fieldset>
 
                     <button type="submit" class="btn btn-success">Save</button>

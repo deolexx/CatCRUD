@@ -53,8 +53,8 @@
                 <th>ID</th>
                 <th>price</th>
                 <th>breed</th>
-                <th>seller_name</th>
-                <th>seller_phone</th>
+                <th>Seller Name</th>
+                <th>Seller Phone</th>
             </tr>
             </thead>
             <tbody>

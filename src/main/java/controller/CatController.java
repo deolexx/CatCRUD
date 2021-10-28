@@ -108,8 +108,10 @@ public class CatController extends HttpServlet {
     private void insertCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         int price = Integer.parseInt(req.getParameter("price"));
         String breed = req.getParameter("breed");
-        String seller = req.getParameter("seller");
-        Cat newCat = new Cat(price, breed, seller);
+        String seller_name = req.getParameter("seller_name");
+        String seller_phone = req.getParameter("seller_phone");
+
+        Cat newCat = new Cat(price, breed, seller_name,seller_phone);
         catDaoImpl.save(newCat);
         resp.sendRedirect("list");
     }
