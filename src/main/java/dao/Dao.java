@@ -4,6 +4,11 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ *
+ * @param <T> - generic param type for Data Access Object
+ * @param <ID> - type of the primary key field
+ */
 public interface Dao <T, ID>{
     Optional<T> find(ID id) throws SQLException;
     List<T> findAll() throws SQLException;

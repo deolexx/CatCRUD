@@ -86,7 +86,7 @@ public class CatController extends HttpServlet {
         String seller_name = req.getParameter("seller_name");
         String seller_phone = req.getParameter("seller_phone");
 
-        Cat cat = new Cat(id, price, breed, seller_name,seller_phone);
+        Cat cat = new Cat(id, price, breed, seller_name, seller_phone);
         catDaoImpl.update(cat);
         resp.sendRedirect("list");
     }
