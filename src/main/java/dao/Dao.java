@@ -13,13 +13,13 @@ public interface Dao<T, ID> {
      * List of basic methods for
      * CRUD actions
      */
-    Optional<T> find(ID id) throws SQLException;
+    Optional<T> find(ID id) throws SQLException, ClassNotFoundException;
 
-    List<T> findAll() throws SQLException;
+    List<T> findAll() throws SQLException, ClassNotFoundException;
 
-    boolean save(T o) throws SQLException;
+    boolean save(T o) throws SQLException, ClassNotFoundException;
 
-    boolean update(T o) throws SQLException;
+    boolean update(T o) throws SQLException, ClassNotFoundException;
 
-    boolean delete(T o) throws SQLException;
+    boolean delete(T o) throws SQLException, ClassNotFoundException;
 }

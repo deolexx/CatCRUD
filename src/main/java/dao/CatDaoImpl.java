@@ -34,7 +34,7 @@ public class CatDaoImpl implements CatDao {
      * @throws SQLException - throws and exception
      */
     @Override
-    public Optional<Cat> find(String id) throws SQLException {
+    public Optional<Cat> find(String id) throws SQLException, ClassNotFoundException {
         String sql = "SELECT cat_id,price,breed,name,phone FROM cat JOIN seller ON seller.id=cat.seller_id WHERE cat.cat_id=?";
         int cats_id = 0, price = 0;
         String breed = "", seller_name = "", seller_phone = "";
@@ -61,7 +61,7 @@ public class CatDaoImpl implements CatDao {
      * @throws SQLException - throw exception
      */
     @Override
-    public List<Cat> findAll() throws SQLException {
+    public List<Cat> findAll() throws SQLException, ClassNotFoundException {
         List<Cat> cats = new ArrayList<>();
         String sql = "SELECT cat_id,price,breed,name,phone FROM cat JOIN seller ON seller.id=cat.seller_id";
         Connection connection = JDBCPostgresConnection.getConnection();
@@ -88,7 +88,7 @@ public class CatDaoImpl implements CatDao {
      * @throws SQLException - possibly throws exception
      */
     @Override
-    public boolean save(Cat cat) throws SQLException {
+    public boolean save(Cat cat) throws SQLException, ClassNotFoundException {
         boolean rowInserted;
         String sql1 = "INSERT INTO seller (name, phone) VALUES ( ?, ?) RETURNING id";
         String sql2 = "INSERT INTO cat (price,breed,seller_id) VALUES ( ?, ?, ?)";
@@ -118,7 +118,7 @@ public class CatDaoImpl implements CatDao {
      * @throws SQLException - possibly throws exception
      */
     @Override
-    public boolean update(Cat cat) throws SQLException {
+    public boolean update(Cat cat) throws SQLException, ClassNotFoundException {
         boolean rowUpdated;
         String sql = "UPDATE cat SET price = ?, breed = ? WHERE cat_id = ? RETURNING seller_id";
         String sql2 = "UPDATE seller SET name = ? ,phone = ? WHERE id= ?";
@@ -150,7 +150,7 @@ public class CatDaoImpl implements CatDao {
      * @throws SQLException - possibly throws exception
      */
     @Override
-    public boolean delete(Cat cat) throws SQLException {
+    public boolean delete(Cat cat) throws SQLException, ClassNotFoundException {
         boolean rowUpdated;
         String sql = "DELETE FROM cat WHERE cat_id = ?";
         Connection connection = JDBCPostgresConnection.getConnection();

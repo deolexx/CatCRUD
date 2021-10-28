@@ -57,7 +57,7 @@ public class CatController extends HttpServlet {
                     listCat(req, resp);
                     break;
             }
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             // For simplicity just Log the Exceptions
             logger.log(Level.SEVERE, "SQL Error", e);
         }
@@ -65,7 +65,7 @@ public class CatController extends HttpServlet {
 
     }
 
-    private void editCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    private void editCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException, ClassNotFoundException {
         String id = req.getParameter("id");
         Optional<Cat> existingCat = catDaoImpl.find(id);
 
@@ -74,7 +74,7 @@ public class CatController extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void listCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
+    private void listCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException, ClassNotFoundException {
         List<Cat> listCat = catDaoImpl.findAll();
         req.setAttribute("listCat", listCat);
 
@@ -82,7 +82,7 @@ public class CatController extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void updateCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+    private void updateCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ClassNotFoundException {
         int id = Integer.parseInt(req.getParameter("id"));
         int price = Integer.parseInt(req.getParameter("price"));
         String breed = req.getParameter("breed");
@@ -100,7 +100,7 @@ public class CatController extends HttpServlet {
         dispatcher.forward(req, resp);
     }
 
-    private void deleteCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+    private void deleteCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ClassNotFoundException {
         int id = Integer.parseInt(req.getParameter("id"));
         Cat cat = new Cat(id);
         catDaoImpl.delete(cat);
@@ -109,7 +109,7 @@ public class CatController extends HttpServlet {
     }
 
 
-    private void insertCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+    private void insertCat(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException, ClassNotFoundException {
         int price = Integer.parseInt(req.getParameter("price"));
         String breed = req.getParameter("breed");
         String seller_name = req.getParameter("seller_name");
