@@ -78,18 +78,18 @@ public class CatDaoImpl implements CatDao {
         ResultSet resultSet = statement1.executeQuery();
         int seller_id = 0;
         if (resultSet.next()) {
-            seller_id=resultSet.getInt("id");
+            seller_id = resultSet.getInt("id");
         }
         System.out.println(seller_id);
-        connection.close();
+//        connection.close();
 
-        Connection connection2 = JDBCPostgresConnection.getConnection();
+//        Connection connection2 = JDBCPostgresConnection.getConnection();
 
-        PreparedStatement statement2 = connection2.prepareStatement(sql2);
+        PreparedStatement statement2 = connection.prepareStatement(sql2);
         statement2.setInt(1, cat.getPrice());
         statement2.setString(2, cat.getBreed());
         statement2.setInt(3, seller_id);
-        
+
         rowInserted = statement2.executeUpdate() > 0;
         return rowInserted;
     }
@@ -97,14 +97,25 @@ public class CatDaoImpl implements CatDao {
     @Override
     public boolean update(Cat cat) throws SQLException {
         String sql = "UPDATE cat SET price = ?, breed = ?";
-        sql += " WHERE cat_id = ?";
+        sql += " WHERE cat_id = ? RETURNING seller_id";
+        String sql2 = "UPDATE seller SET name = ? ,phone = ? WHERE id= ?";
         boolean rowUpdated;
         Connection connection = JDBCPostgresConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, cat.getPrice());
-        statement.setString(2, cat.getBreed());
-        statement.setInt(3, cat.getId());
-        rowUpdated = statement.executeUpdate() > 0;
+        PreparedStatement statement1 = connection.prepareStatement(sql);
+
+        statement1.setInt(1, cat.getPrice());
+        statement1.setString(2, cat.getBreed());
+        statement1.setInt(3, cat.getId());
+        ResultSet resultSet = statement1.executeQuery();
+        int seller_id = 0;
+        if (resultSet.next()) {
+            seller_id = resultSet.getInt("seller_id");
+        }
+        PreparedStatement statement2 = connection.prepareStatement(sql2);
+        statement2.setString(1,cat.getSeller_name());
+        statement2.setString(2,cat.getSeller_phone());
+        statement2.setInt(3,seller_id);
+        rowUpdated = statement2.executeUpdate() > 0;
         return rowUpdated;
     }
 
