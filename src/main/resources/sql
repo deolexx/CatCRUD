@@ -1,0 +1,34 @@
+CREATE TABLE public.cat
+(
+    cat_id integer NOT NULL DEFAULT nextval('cat_id_seq'::regclass),
+    price integer,
+    breed character varying(50) COLLATE pg_catalog."default",
+    seller_id integer,
+    CONSTRAINT cat_pkey PRIMARY KEY (cat_id),
+    CONSTRAINT cat_seller_id_fkey FOREIGN KEY (seller_id)
+        REFERENCES public.seller (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE public.cat
+    OWNER to test;
+
+    -- Table: public.seller
+
+    -- DROP TABLE public.seller;
+
+    CREATE TABLE public.seller
+    (
+        id integer NOT NULL DEFAULT nextval('seller_id_seq'::regclass),
+        name character varying(50) COLLATE pg_catalog."default",
+        phone character varying(50) COLLATE pg_catalog."default",
+        CONSTRAINT seller_pkey PRIMARY KEY (id)
+    )
+
+    TABLESPACE pg_default;
+
+    ALTER TABLE public.seller
+        OWNER to test;
