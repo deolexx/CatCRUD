@@ -22,19 +22,27 @@ public class JDBCPostgresConnection {
      *
      * @return - returns connection with database
      */
-    public static Connection getConnection() throws ClassNotFoundException, SQLException {
-        Connection connection;
+    public static Connection getConnection()  {
+        Connection connection = null;
         getProperties();
-                   Class.forName("org.postgresql.Driver");
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
             connection = DriverManager.getConnection(
-                    "jdbc:postgresql://"
-                            + host
-                            + ":"
-                            + port + "/"
-                            + database
-                    , user
-                    , password);
-               return connection;
+                        "jdbc:postgresql://"
+                                + host
+                                + ":"
+                                + port + "/"
+                                + database
+                        , user
+                        , password);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return connection;
     }
 
     private static void getProperties() {
