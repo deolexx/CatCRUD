@@ -31,25 +31,33 @@ public class CatDaoImpl implements CatDao {
      *
      * @param id - id of an object to find
      * @return - return Cat if present else return null
-     * @throws SQLException - throws and exception
      */
     @Override
-    public Optional<Cat> find(String id) throws SQLException, ClassNotFoundException {
+    public Optional<Cat> find(String id) {
         String sql = "SELECT cat_id,price,breed,name,phone FROM cat JOIN seller ON seller.id=cat.seller_id WHERE cat.cat_id=?";
         int cats_id = 0, price = 0;
         String breed = "", seller_name = "", seller_phone = "";
 
         Connection connection = JDBCPostgresConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, Integer.parseInt(id));
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            cats_id = resultSet.getInt("cat_id");
-            price = resultSet.getInt("price");
-            breed = resultSet.getString("breed");
-            seller_name = resultSet.getString("name");
-            seller_phone = resultSet.getString("phone");
+        PreparedStatement statement;
+        try {
+            statement = connection.prepareStatement(sql);
+
+
+            statement.setInt(1, Integer.parseInt(id));
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                cats_id = resultSet.getInt("cat_id");
+                price = resultSet.getInt("price");
+                breed = resultSet.getString("breed");
+                seller_name = resultSet.getString("name");
+                seller_phone = resultSet.getString("phone");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
         return Optional.of(new Cat(cats_id, price, breed, seller_name, seller_phone));
     }
 
@@ -61,10 +69,11 @@ public class CatDaoImpl implements CatDao {
      * @throws SQLException - throw exception
      */
     @Override
-    public List<Cat> findAll() throws SQLException, ClassNotFoundException {
+    public List<Cat> findAll() throws SQLException {
         List<Cat> cats = new ArrayList<>();
         String sql = "SELECT cat_id,price,breed,name,phone FROM cat JOIN seller ON seller.id=cat.seller_id";
-        Connection connection = JDBCPostgresConnection.getConnection();
+        Connection connection = null;
+        connection = JDBCPostgresConnection.getConnection();
         PreparedStatement statement = connection.prepareStatement(sql);
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
@@ -93,6 +102,7 @@ public class CatDaoImpl implements CatDao {
         String sql1 = "INSERT INTO seller (name, phone) VALUES ( ?, ?) RETURNING id";
         String sql2 = "INSERT INTO cat (price,breed,seller_id) VALUES ( ?, ?, ?)";
         Connection connection = JDBCPostgresConnection.getConnection();
+
         PreparedStatement statement1 = connection.prepareStatement(sql1);
         statement1.setString(1, cat.getSeller_name());
         statement1.setString(2, cat.getSeller_phone());
