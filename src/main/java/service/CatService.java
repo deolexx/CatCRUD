@@ -33,12 +33,8 @@ public class CatService {
     }
 
     public void listCat(HttpServletRequest req, HttpServletResponse resp)  {
-        List<Cat> listCat = null;
-        try {
-            listCat = catDaoImpl.findAll();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
+        List<Cat> listCat;
+        listCat = catDaoImpl.findAll();
         req.setAttribute("listCat", listCat);
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/cat-list.jsp");

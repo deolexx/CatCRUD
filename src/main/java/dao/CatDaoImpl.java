@@ -69,12 +69,15 @@ public class CatDaoImpl implements CatDao {
      * @throws SQLException - throw exception
      */
     @Override
-    public List<Cat> findAll() throws SQLException {
+    public List<Cat> findAll()  {
         List<Cat> cats = new ArrayList<>();
         String sql = "SELECT cat_id,price,breed,name,phone FROM cat JOIN seller ON seller.id=cat.seller_id";
         Connection connection = null;
         connection = JDBCPostgresConnection.getConnection();
-        PreparedStatement statement = connection.prepareStatement(sql);
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(sql);
+
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
             int id = resultSet.getInt("cat_id");
@@ -84,6 +87,9 @@ public class CatDaoImpl implements CatDao {
             String seller_phone = resultSet.getString("phone");
             Cat cat = new Cat(id, price, breed, seller_name, seller_phone);
             cats.add(cat);
+        }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
         Collections.sort(cats);
         return cats;
