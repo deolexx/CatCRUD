@@ -12,14 +12,29 @@ import javax.servlet.http.HttpServletResponse;
  */
 @WebServlet("/")
 public class CatController extends HttpServlet {
-
+    /**
+     * Service instance
+     */
     private static final CatService CAT_SERVICE = new CatService();
 
-
+    /**
+     * Additional controller methods which contains no logic
+     * and just redirect requests/responses
+     *
+     * @param req  - call to redirect
+     * @param resp - call to redirect
+     */
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
         doGet(req, resp);
     }
 
+    /**
+     * Main method which operate servlet logic
+     * and calls needed methods in service layer
+     *
+     * @param req  - incoming http request
+     * @param resp - incoming http response
+     */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
         String action = req.getServletPath();

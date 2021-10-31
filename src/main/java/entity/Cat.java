@@ -1,8 +1,8 @@
 package entity;
 
 
-public class Cat implements Comparable<Cat>{
-    protected  int id;
+public class Cat implements Comparable<Cat> {
+    protected int id;
     protected int price;
     protected String breed;
     protected String seller_name;
@@ -87,7 +87,7 @@ public class Cat implements Comparable<Cat>{
 
 
     public int compareTo(Cat cat) {
-       return   this.getId()>cat.getId()?1:-1;
+        return this.getId() > cat.getId() ? 1 : -1;
 
     }
 

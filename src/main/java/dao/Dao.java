@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Base data access interface
+ *
  * @param <T>  - generic param type for Data Access Object
  * @param <ID> - type of the primary key field
  */
