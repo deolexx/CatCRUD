@@ -13,14 +13,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class CatService {
-    private final CatDaoImpl catDaoImpl = CatDaoImpl.getInstance();
+    private final CatDaoImpl catDaoImpl;
 
+    public CatService(CatDaoImpl catDaoImpl) {
+        this.catDaoImpl = catDaoImpl;
+    }
 
     public void editCat(HttpServletRequest req, HttpServletResponse resp) {
         String id = req.getParameter("id");
         Optional<Cat> existingCat;
 
-            existingCat = catDaoImpl.find(id);
+        existingCat = catDaoImpl.find(id);
 
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/cat-form.jsp");
@@ -32,7 +35,7 @@ public class CatService {
         }
     }
 
-    public void listCat(HttpServletRequest req, HttpServletResponse resp)  {
+    public void listCat(HttpServletRequest req, HttpServletResponse resp) {
         List<Cat> listCat;
         listCat = catDaoImpl.findAll();
         req.setAttribute("listCat", listCat);
@@ -45,7 +48,7 @@ public class CatService {
         }
     }
 
-    public void updateCat(HttpServletRequest req, HttpServletResponse resp)  {
+    public void updateCat(HttpServletRequest req, HttpServletResponse resp) {
         int id = Integer.parseInt(req.getParameter("id"));
         int price = Integer.parseInt(req.getParameter("price"));
         String breed = req.getParameter("breed");
@@ -65,14 +68,12 @@ public class CatService {
         }
     }
 
-    public void showNewForm(HttpServletRequest req, HttpServletResponse resp)  {
+    public void showNewForm(HttpServletRequest req, HttpServletResponse resp) {
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/cat-form.jsp");
         try {
             dispatcher.forward(req, resp);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (ServletException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -86,16 +87,12 @@ public class CatService {
             resp.sendRedirect("list");
 
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | SQLException | ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-        public void insertCat(HttpServletRequest req, HttpServletResponse resp)  {
+    public void insertCat(HttpServletRequest req, HttpServletResponse resp) {
         int price = Integer.parseInt(req.getParameter("price"));
         String breed = req.getParameter("breed");
         String seller_name = req.getParameter("seller_name");
@@ -103,10 +100,8 @@ public class CatService {
         Cat newCat = new Cat(price, breed, seller_name, seller_phone);
         try {
             catDaoImpl.save(newCat);
-        } catch (SQLException throwables) {
+        } catch (SQLException | ClassNotFoundException throwables) {
             throwables.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
         try {
             resp.sendRedirect("list");

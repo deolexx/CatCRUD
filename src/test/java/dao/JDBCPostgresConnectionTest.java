@@ -13,20 +13,20 @@ class JDBCPostgresConnectionTest {
     JDBCPostgresConnection connection = new JDBCPostgresConnection();
 
 
-//    @Container
-//    private final PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer()
-//            .withDatabaseName("test")
-//            .withUsername("test")
-//            .withPassword("test");
-//
-//
-//
-//    @Test
-//    void run_Container()  {
-//        assertTrue(postgresqlContainer.isRunning());
-//        assertTrue(postgresqlContainer.isRunning());
-//
-//    }
+    @Container
+    private final PostgreSQLContainer postgresqlContainer = new PostgreSQLContainer()
+            .withDatabaseName("test")
+            .withUsername("test")
+            .withPassword("test");
+
+
+
+    @Test
+    void run_Container()  {
+        assertTrue(postgresqlContainer.isRunning());
+        assertTrue(postgresqlContainer.isRunning());
+
+    }
 
 
     @Test

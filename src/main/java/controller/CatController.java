@@ -1,5 +1,6 @@
 package controller;
 
+import dao.CatDaoImpl;
 import service.CatService;
 
 import javax.servlet.annotation.WebServlet;
@@ -15,7 +16,7 @@ public class CatController extends HttpServlet {
     /**
      * Service instance
      */
-    private static final CatService CAT_SERVICE = new CatService();
+    private static final CatService CAT_SERVICE = new CatService(new CatDaoImpl());
 
     /**
      * Additional controller methods which contains no logic

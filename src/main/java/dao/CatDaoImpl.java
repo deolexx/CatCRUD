@@ -14,17 +14,7 @@ import java.util.Optional;
 public class CatDaoImpl implements CatDao {
 
 
-    private CatDaoImpl() {
-    }
 
-    /**
-     * Returns singletone instance of current class
-     *
-     * @return - Singletone instance for CatDaoImpl class
-     */
-    public static CatDaoImpl getInstance() {
-        return SingleToneHelper.INSTANCE;
-    }
 
     /**
      * Returns Optional value from database specified by passed id
@@ -112,6 +102,7 @@ public class CatDaoImpl implements CatDao {
         PreparedStatement statement1 = connection.prepareStatement(sql1);
         statement1.setString(1, cat.getSeller_name());
         statement1.setString(2, cat.getSeller_phone());
+        connection.setAutoCommit(false);
         ResultSet resultSet = statement1.executeQuery();
         int seller_id = 0;
         if (resultSet.next()) {
@@ -123,7 +114,7 @@ public class CatDaoImpl implements CatDao {
         statement2.setInt(3, seller_id);
 
         rowInserted = statement2.executeUpdate() > 0;
-
+        connection.commit();
         return rowInserted;
     }
 
@@ -141,6 +132,7 @@ public class CatDaoImpl implements CatDao {
         String sql2 = "UPDATE seller SET name = ? ,phone = ? WHERE id= ?";
 
         Connection connection = JDBCPostgresConnection.getConnection();
+        connection.setAutoCommit(false);
         PreparedStatement statement1 = connection.prepareStatement(sql);
 
         statement1.setInt(1, cat.getPrice());
@@ -156,6 +148,7 @@ public class CatDaoImpl implements CatDao {
         statement2.setString(2, cat.getSeller_phone());
         statement2.setInt(3, seller_id);
         rowUpdated = statement2.executeUpdate() > 0;
+        connection.commit();
         return rowUpdated;
     }
 
