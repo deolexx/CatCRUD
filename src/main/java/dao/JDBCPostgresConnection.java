@@ -22,6 +22,7 @@ public class JDBCPostgresConnection {
      *
      * @return - returns connection with database
      */
+
     public static Connection getConnection()  {
         Connection connection = null;
         getProperties();

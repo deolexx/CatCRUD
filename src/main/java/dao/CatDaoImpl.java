@@ -12,6 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class CatDaoImpl implements CatDao {
+    Connection connection=JDBCPostgresConnection.getConnection();
+
+    public void setConnection(Connection connection) {
+        this.connection = connection;
+    }
 
 
 
@@ -28,7 +33,7 @@ public class CatDaoImpl implements CatDao {
         int cats_id = 0, price = 0;
         String breed = "", seller_name = "", seller_phone = "";
 
-        Connection connection = JDBCPostgresConnection.getConnection();
+
         PreparedStatement statement;
         try {
             statement = connection.prepareStatement(sql);
@@ -62,8 +67,7 @@ public class CatDaoImpl implements CatDao {
     public List<Cat> findAll()  {
         List<Cat> cats = new ArrayList<>();
         String sql = "SELECT cat_id,price,breed,name,phone FROM cat JOIN seller ON seller.id=cat.seller_id";
-        Connection connection = null;
-        connection = JDBCPostgresConnection.getConnection();
+
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(sql);
@@ -97,7 +101,7 @@ public class CatDaoImpl implements CatDao {
         boolean rowInserted;
         String sql1 = "INSERT INTO seller (name, phone) VALUES ( ?, ?) RETURNING id";
         String sql2 = "INSERT INTO cat (price,breed,seller_id) VALUES ( ?, ?, ?)";
-        Connection connection = JDBCPostgresConnection.getConnection();
+
 
         PreparedStatement statement1 = connection.prepareStatement(sql1);
         statement1.setString(1, cat.getSeller_name());
@@ -131,7 +135,7 @@ public class CatDaoImpl implements CatDao {
         String sql = "UPDATE cat SET price = ?, breed = ? WHERE cat_id = ? RETURNING seller_id";
         String sql2 = "UPDATE seller SET name = ? ,phone = ? WHERE id= ?";
 
-        Connection connection = JDBCPostgresConnection.getConnection();
+
         connection.setAutoCommit(false);
         PreparedStatement statement1 = connection.prepareStatement(sql);
 
@@ -163,15 +167,12 @@ public class CatDaoImpl implements CatDao {
     public boolean delete(Cat cat) throws SQLException, ClassNotFoundException {
         boolean rowUpdated;
         String sql = "DELETE FROM cat WHERE cat_id = ?";
-        Connection connection = JDBCPostgresConnection.getConnection();
+
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, cat.getId());
         rowUpdated = statement.executeUpdate() > 0;
         return rowUpdated;
     }
 
-    //inner class inside which CatDaoImp instance created
-    private static class SingleToneHelper {
-        private static final CatDaoImpl INSTANCE = new CatDaoImpl();
-    }
+
 }

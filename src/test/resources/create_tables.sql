@@ -1,0 +1,4 @@
+CREATE TABLE seller (id SERIAL PRIMARY KEY, name VARCHAR(50), phone VARCHAR(50));
+
+CREATE TABLE cat (cat_id SERIAL PRIMARY KEY, price INTEGER, breed VARCHAR(50), seller_id INTEGER REFERENCES seller(id));
+
