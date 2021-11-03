@@ -3,6 +3,7 @@ package service;
 import dao.CatDaoImpl;
 import entity.Cat;
 import lombok.SneakyThrows;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -57,8 +58,20 @@ class CatServiceTest {
     }
 
     @Test
-    void listCat() {
+    void whenListCatUsedThenCatDaoFindAllTriggered() {
+        when(req.getRequestDispatcher("jsp/cat-list.jsp")).thenReturn(new RequestDispatcher() {
+            @Override
+            public void forward(ServletRequest servletRequest, ServletResponse servletResponse) {
+            }
 
+            @Override
+            public void include(ServletRequest servletRequest, ServletResponse servletResponse) {
+
+            }
+        });
+    catService.listCat(req,res);
+
+    verify(catDao).findAll();
     }
 
     @Test
@@ -74,7 +87,22 @@ class CatServiceTest {
     }
 
     @Test
-    void showNewForm() {
+    void whenShowNewFormCalledPageRedirectedToCatFormJsp() {
+
+
+        when(req.getRequestDispatcher("jsp/cat-form.jsp")).thenReturn(new RequestDispatcher() {
+            @Override
+            public void forward(ServletRequest servletRequest, ServletResponse servletResponse) {
+
+            }
+
+            @Override
+            public void include(ServletRequest servletRequest, ServletResponse servletResponse) {
+
+            }
+        });
+
+
     }
 
     @Test
@@ -84,6 +112,11 @@ class CatServiceTest {
         catService.deleteCat(req, res);
         verify(catDao).delete(any(Cat.class));
     }
+
+
+
+
+
 
     @Test
     @SneakyThrows
