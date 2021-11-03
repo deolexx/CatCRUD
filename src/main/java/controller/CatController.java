@@ -16,7 +16,11 @@ public class CatController extends HttpServlet {
     /**
      * Service instance
      */
-    private static final CatService CAT_SERVICE = new CatService(new CatDaoImpl());
+    private static CatService CAT_SERVICE = new CatService(new CatDaoImpl());
+
+    public static void setCatService(CatService catService) {
+        CAT_SERVICE = catService;
+    }
 
     /**
      * Additional controller methods which contains no logic
