@@ -2,25 +2,18 @@ package dao;
 
 import entity.Cat;
 import lombok.SneakyThrows;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.sql.Connection;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @Testcontainers
 class CatDaoImplTest {
@@ -28,8 +21,8 @@ class CatDaoImplTest {
 
     private static PostgreSQLContainer postgreSQLContainer;
 
-    private static Connection connection=null;
-    private static CatDaoImpl catDao = new CatDaoImpl();
+    private static Connection connection = null;
+    private static final CatDaoImpl catDao = new CatDaoImpl();
 
 
     @BeforeAll
@@ -37,7 +30,7 @@ class CatDaoImplTest {
 
         postgreSQLContainer = (PostgreSQLContainer) new PostgreSQLContainer("postgres:13-alpine")
                 .withExposedPorts(5432);
-                postgreSQLContainer
+        postgreSQLContainer
                 .withDatabaseName("test")
                 .withUsername("test")
                 .withPassword("test")
@@ -54,31 +47,35 @@ class CatDaoImplTest {
             e.printStackTrace();
         }
 
-
         catDao.setConnection(connection);
     }
 
 
     @Test
-    void findTestCase() {
-
+    @SneakyThrows
+    void findInDBByID() {
+        String breed = "test", seller_name = "test", seller_phone = "test";
+        int price = 100;
+        Cat cat = new Cat(price, breed, seller_name, seller_phone);
+        assertTrue(catDao.save(cat));
+        Optional<Cat> cat1 = catDao.find("1");
+        cat1.ifPresent(cat2 -> assertEquals(1, cat2.getId()));
     }
 
     @Test
-    void findAllTestCase() {
-        CatDaoImpl catDaoImpl = mock(CatDaoImpl.class);
-        List<Cat> cats = Arrays.asList(new Cat(), new Cat());
-        when(catDaoImpl.findAll()).thenReturn(cats);
-        assertEquals(catDaoImpl.findAll().size(), 2);
+    void findAllCatsInsideDB() {
+        List<Cat> cats = catDao.findAll();
+        assertFalse(cats.isEmpty());
+        assertEquals(2, cats.size());
     }
 
     @Test
     @SneakyThrows
     void isNewCatSavedInDataBase() {
 
-        String breed="test", seller_name="test",seller_phone="test";
-        int price=100,seller_id;
-        Cat cat = new Cat(price,breed,seller_name,seller_phone);
+        String breed = "test", seller_name = "test", seller_phone = "test";
+        int price = 100;
+        Cat cat = new Cat(price, breed, seller_name, seller_phone);
         assertTrue(postgreSQLContainer.isRunning());
 
         assertTrue(catDao.save(cat));
@@ -88,10 +85,10 @@ class CatDaoImplTest {
 
     @Test
     @SneakyThrows
-    void update() {
-        String breed="test", seller_name="test",seller_phone="test";
-        int price=100,seller_id,cat_id=1;
-        Cat cat = new Cat(price,breed,seller_name,seller_phone);
+    void updateCatInsideDB() {
+        String breed = "test", seller_name = "test", seller_phone = "test";
+        int price = 100, cat_id = 2;
+        Cat cat = new Cat(cat_id, price, breed, seller_name, seller_phone);
         catDao.save(cat);
         assertTrue(catDao.update(cat));
 
@@ -99,10 +96,10 @@ class CatDaoImplTest {
 
     @Test
     @SneakyThrows
-    void delete() {
-        String breed="test", seller_name="test",seller_phone="test";
-        int price=100,seller_id,cat_id=1;
-        Cat cat = new Cat(cat_id,price,breed,seller_name,seller_phone);
+    void deleteCatFromDB() {
+        String breed = "test", seller_name = "test", seller_phone = "test";
+        int price = 100, cat_id = 1;
+        Cat cat = new Cat(cat_id, price, breed, seller_name, seller_phone);
         catDao.save(cat);
         assertTrue(catDao.delete(cat));
     }
