@@ -1,7 +1,10 @@
 package entity;
 
-
+/**
+ * main Entity class
+ */
 public class Cat implements Comparable<Cat> {
+
     protected int id;
     protected int price;
     protected String breed;
@@ -14,8 +17,6 @@ public class Cat implements Comparable<Cat> {
     public Cat(int id) {
         this.id = id;
     }
-
-
 
 
     public Cat(int id, int price, String breed, String seller_name, String seller_phone) {
@@ -39,11 +40,9 @@ public class Cat implements Comparable<Cat> {
     }
 
 
-
     public int getId() {
         return id;
     }
-
 
 
     public int getPrice() {
@@ -51,18 +50,14 @@ public class Cat implements Comparable<Cat> {
     }
 
 
-
     public String getBreed() {
         return breed;
     }
 
 
-
     public String getSeller_name() {
         return seller_name;
     }
-
-
 
 
     public int compareTo(Cat cat) {

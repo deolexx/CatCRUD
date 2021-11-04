@@ -19,6 +19,14 @@ public class CatService {
         this.catDaoImpl = catDaoImpl;
     }
 
+
+    /**
+     * Find cat by id, and if cat exists, redirect to
+     * cat edit form
+     *
+     * @param req  - HttpServletRequest
+     * @param resp - HttpServletResponse
+     */
     public void editCat(HttpServletRequest req, HttpServletResponse resp) {
         String id = req.getParameter("id");
         Optional<Cat> existingCat;
@@ -35,6 +43,12 @@ public class CatService {
         }
     }
 
+    /**
+     * Show all cats found
+     *
+     * @param req  - HttpServletRequest
+     * @param resp - HttpServletResponse
+     */
     public void listCat(HttpServletRequest req, HttpServletResponse resp) {
         List<Cat> listCat;
         listCat = catDaoImpl.findAll();
@@ -48,6 +62,12 @@ public class CatService {
         }
     }
 
+    /**
+     * Updates info of an existing cat
+     *
+     * @param req  - HttpServletRequest
+     * @param resp - HttpServletResponse
+     */
     public void updateCat(HttpServletRequest req, HttpServletResponse resp) {
         int id = Integer.parseInt(req.getParameter("id"));
         int price = Integer.parseInt(req.getParameter("price"));
@@ -68,6 +88,12 @@ public class CatService {
         }
     }
 
+    /**
+     * Shows cat edit form
+     *
+     * @param req  - HttpServletRequest
+     * @param resp - HttpServletResponse
+     */
     public void showNewForm(HttpServletRequest req, HttpServletResponse resp) {
 
         RequestDispatcher dispatcher = req.getRequestDispatcher("jsp/cat-form.jsp");
@@ -92,6 +118,12 @@ public class CatService {
         }
     }
 
+    /**
+     * Create new cat
+     *
+     * @param req  - HttpServletRequest
+     * @param resp - HttpServletResponse
+     */
     public void insertCat(HttpServletRequest req, HttpServletResponse resp) {
         int price = Integer.parseInt(req.getParameter("price"));
         String breed = req.getParameter("breed");

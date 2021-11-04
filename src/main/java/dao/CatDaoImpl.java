@@ -12,13 +12,11 @@ import java.util.List;
 import java.util.Optional;
 
 public class CatDaoImpl implements CatDao {
-    Connection connection=JDBCPostgresConnection.getConnection();
+    Connection connection = JDBCPostgresConnection.getConnection();
 
     public void setConnection(Connection connection) {
         this.connection = connection;
     }
-
-
 
 
     /**
@@ -61,27 +59,26 @@ public class CatDaoImpl implements CatDao {
      * sorted by id in ascending order
      *
      * @return - List with Cat type inside
-     * @throws SQLException - throw exception
      */
     @Override
-    public List<Cat> findAll()  {
+    public List<Cat> findAll() {
         List<Cat> cats = new ArrayList<>();
         String sql = "SELECT cat_id,price,breed,name,phone FROM cat JOIN seller ON seller.id=cat.seller_id";
 
-        PreparedStatement statement = null;
+        PreparedStatement statement;
         try {
             statement = connection.prepareStatement(sql);
 
-        ResultSet resultSet = statement.executeQuery();
-        while (resultSet.next()) {
-            int id = resultSet.getInt("cat_id");
-            int price = resultSet.getInt("price");
-            String breed = resultSet.getString("breed");
-            String seller_name = resultSet.getString("name");
-            String seller_phone = resultSet.getString("phone");
-            Cat cat = new Cat(id, price, breed, seller_name, seller_phone);
-            cats.add(cat);
-        }
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("cat_id");
+                int price = resultSet.getInt("price");
+                String breed = resultSet.getString("breed");
+                String seller_name = resultSet.getString("name");
+                String seller_phone = resultSet.getString("phone");
+                Cat cat = new Cat(id, price, breed, seller_name, seller_phone);
+                cats.add(cat);
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -94,7 +91,8 @@ public class CatDaoImpl implements CatDao {
      *
      * @param cat - object to save
      * @return - return true if object saved,else false
-     * @throws SQLException - possibly throws exception
+     * @throws SQLException - possibly thrown exception
+     * @throws ClassNotFoundException - possibly thrown exception
      */
     @Override
     public boolean save(Cat cat) throws SQLException, ClassNotFoundException {
@@ -127,7 +125,8 @@ public class CatDaoImpl implements CatDao {
      *
      * @param cat - object to update
      * @return - return true if object updated,else false
-     * @throws SQLException - possibly throws exception
+     * @throws SQLException - possibly thrown exception
+     * @throws ClassNotFoundException - possibly thrown exception
      */
     @Override
     public boolean update(Cat cat) throws SQLException, ClassNotFoundException {
@@ -162,6 +161,7 @@ public class CatDaoImpl implements CatDao {
      * @param cat - object to delete
      * @return - bool value, true if deleted, else false
      * @throws SQLException - possibly throws exception
+     * @throws ClassNotFoundException - possibly thrown exception
      */
     @Override
     public boolean delete(Cat cat) throws SQLException, ClassNotFoundException {
