@@ -21,10 +21,10 @@ psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-E
        seller_id INTEGER REFERENCES seller(id)
 
    );
-    INSERT INTO seller (id,name,phone)
-    VALUES (1,'Satan','666-66-666'),(2,'Bender','1010101010010');
-    INSERT INTO cat (cat_id,price,breed,seller_id)
-    VALUES (1,666,'Hellcat',1),(2,1010101,'Robocat',2);
+      INSERT INTO seller (name,phone)
+      VALUES ('Satan','666-66-666'),('Bender','1010101010010');
+      INSERT INTO cat (price,breed,seller_id)
+      VALUES (666,'Hellcat',1),(1010101,'Robocat',2);
 
 
   COMMIT;
